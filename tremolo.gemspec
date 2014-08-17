@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Tremolo::VERSION
   spec.authors       = ["Tony Pitale"]
   spec.email         = ["tpitale@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
+  spec.summary       = %q{InfluxDB UDP Tracker built on Celluloid::IO}
+  spec.description   = %q{InfluxDB UDP Tracker built on Celluloid::IO}
+  spec.homepage      = "https://github.com/tpitale/tremolo"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -18,6 +18,12 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
+  spec.add_dependency "celluloid-io", ">= 0.15.0"
+
   spec.add_development_dependency "bundler", "~> 1.6"
   spec.add_development_dependency "rake"
+  spec.add_development_dependency "rspec", "~> 3.0"
+  spec.add_development_dependency "mocha"
+  spec.add_development_dependency "bourne"
+  spec.add_development_dependency "simplecov"
 end
