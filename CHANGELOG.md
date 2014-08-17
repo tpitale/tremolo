@@ -1,3 +1,9 @@
+## Tremolo 0.0.2 ##
+
+*   Track stats with an optional :namespace
+
+    *Tony Pitale*
+
 ## Tremolo 0.0.1 ##
 
 *   Initial implementation
