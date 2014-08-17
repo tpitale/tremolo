@@ -80,11 +80,3 @@ Some thought should be given to the design and structure of the namespace and se
 **Note** The default precision is `ms` it appears. So far there is no way to configure `time_precision` when using UDP. More info here: http://influxdb.com/docs/v0.7/api/reading_and_writing_data.html#time-precision-on-written-data
 
 **Note** Be careful passing data to `write_point` that includes the keys `time` or `sequence_number`, they have special meaning to InfluxDB: http://influxdb.com/docs/v0.7/api/reading_and_writing_data.html#specifying-time-and-sequence-number-on-writes
-
-## Contributing
-
-1. Fork it ( https://github.com/[my-github-username]/tremolo/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
