@@ -1,7 +1,11 @@
 module Tremolo
   class Tracker
+    attr_reader :namespace
+
     def initialize(host, port, options={})
       @sender = Sender.new(host, port)
+
+      @namespace = options[:namespace]
     end
 
     def series(series_name)
@@ -33,7 +37,7 @@ module Tremolo
     end
 
     def write_points(series_name, data)
-      @sender.write_points(series_name, data)
+      @sender.write_points([namespace, series_name].compact.join('.'), data)
     end
   end
 end

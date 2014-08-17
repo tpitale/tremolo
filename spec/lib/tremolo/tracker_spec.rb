@@ -58,4 +58,16 @@ describe Tremolo::Tracker do
     expect(returned).to eq('returning a thing')
     expect(socket).to have_received(:send).with(json, 0)
   end
+
+  context "with a namespace" do
+    let(:tracker) {Tremolo.tracker('0.0.0.0', 4444, namespace: 'alf')}
+
+    it 'tracks timing value for ms' do
+      tracker.timing('timing.accounts.created', 14)
+
+      json = '[{"name":"alf.timing.accounts.created","columns":["value"],"points":[[14]]}]'
+
+      expect(socket).to have_received(:send).with(json, 0)
+    end
+  end
 end
