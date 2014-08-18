@@ -1,3 +1,9 @@
+## Tremolo 0.0.3 ##
+
+*   Bump celluloid-io requirement to support `UDPSocket.connect`
+
+    *Tony Pitale*
+
 ## Tremolo 0.0.2 ##
 
 *   Track stats with an optional :namespace
