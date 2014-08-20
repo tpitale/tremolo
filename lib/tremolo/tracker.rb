@@ -1,9 +1,13 @@
 module Tremolo
   class Tracker
+    include Celluloid
+
+    trap_exit :sender_died
+
     attr_reader :namespace
 
     def initialize(host, port, options={})
-      @sender = Sender.new(host, port)
+      @host, @port = host, port
 
       @namespace = options[:namespace]
     end
@@ -37,7 +41,16 @@ module Tremolo
     end
 
     def write_points(series_name, data)
-      @sender.write_points([namespace, series_name].compact.join('.'), data)
+      sender.async.write_points([namespace, series_name].compact.join('.'), data)
+    end
+
+    private
+    def sender
+      @sender ||= Sender.new_link(@host, @port)
+    end
+
+    def sender_died(actor, reason=nil)
+      @sender = nil
     end
   end
 end

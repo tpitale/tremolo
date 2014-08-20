@@ -1,6 +1,5 @@
 module Tremolo
   class Sender
-    # include Celluloid::Logger
     include Celluloid::IO
 
     def initialize(host, port)
@@ -11,8 +10,7 @@ module Tremolo
     def write_points(series_name, data)
       begin
         @socket.send(prepare(series_name, data), 0)
-      rescue Errno::ECONNREFUSED => e
-        # debug "Connection refused. Ignoring."
+      rescue Errno::ECONNREFUSED
         nil
       end
     end

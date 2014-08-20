@@ -1,3 +1,12 @@
+## Tremolo 0.0.4 ##
+
+*   Make Tremolo::Tracker a Celluloid actor so that it can be supervised if desired
+*   Trap a dying Sender in Tracker and set to nil to let it reload
+*   Create Sender on the fly in the Tracker using `new_link`
+*   Add Tremolo.supervised_tracker
+
+    *Tony Pitale*
+
 ## Tremolo 0.0.3 ##
 
 *   Bump celluloid-io requirement to support `UDPSocket.connect`

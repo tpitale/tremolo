@@ -16,16 +16,27 @@ Or install it yourself as:
 
     $ gem install tremolo
 
+## Is it any good?
+
+It's getting there, but some of the nuance of the method API and Celluloid's behavior are still being worked out. I'll let you know when it's settled down a bit more.
+
 ## Usage
 
 ```ruby
-# Get a tracker
+# Get an unsupervised tracker
 tracker = Tremolo.tracker('0.0.0.0', 4444)
 
 # options that can be set on the tracker:
 # namespace, a string prefix for all series names on this tracker, joined with '.' (default="")
-
 tracker = Tremolo.tracker('0.0.0.0', 4444, namespace: 'appname')
+
+# tracker is a Celluloid Actor, it will not be GC'd like you would expect so I'd advise against doing it this way.
+
+# Because we're using celluloid, we probably want to create a supervised tracker
+Tremolo.supervised_tracker(:tracker, '0.0.0.0', 4444, namespace: 'appname')
+
+# whenever you want to use this supervised tracker, you can always ask Celluloid
+tracker = Celluloid::Actor[:tracker]
 
 # Write a point to 'series-name' series
 tracker.write_point('series-name', {:value => 121, :otherdata => 998142})

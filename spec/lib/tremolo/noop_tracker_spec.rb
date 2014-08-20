@@ -40,4 +40,8 @@ describe Tremolo::NoopTracker do
     expect(returned).to eq('returning a thing')
     expect(socket).to have_received(:send).never
   end
+
+  it 'makes a series for itself', :celluloid => true do
+    expect(tracker.series('timing.accounts')).to be_kind_of(Tremolo::Series)
+  end
 end

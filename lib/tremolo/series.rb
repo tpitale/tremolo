@@ -1,5 +1,7 @@
 module Tremolo
   class Series
+    include Celluloid
+
     attr_reader :tracker, :series_name
 
     def initialize(tracker, series_name)
