@@ -1,28 +1,27 @@
 module Tremolo
   class DataPoint
-    def self.from_hash(series_name, h)
-      new(series_name, h.reduce(:merge).keys, h)
-    end
+    attr_accessor :series_name, :data, :time
 
-    attr_accessor :series_name, :columns
-
-    def initialize(series_name, columns, data)
+    def initialize(series_name, data, time=nil)
       self.series_name = series_name
-      self.columns = columns.sort
-
-      @data = data
+      self.data = data
+      self.time = time.nil? ? nil : time.to_i
     end
 
-    def points
-      @points ||= @data.map {|h| h.values_at(*columns) }
+    def values
+      @data.map {|h| h.map {|k,v| "#{k}=#{cast(v)}" }.join(',')}
     end
 
-    def as_json
-      [{
-        name: series_name,
-        columns: columns,
-        points: points
-      }]
+    def cast(value)
+      value
+    end
+
+    def line
+      @line ||= lambda {|values| [series_name, values, time].compact.join(' ')}
+    end
+
+    def lines
+      values.map {|v| line.call(v)}.join("\n")
     end
   end
 end

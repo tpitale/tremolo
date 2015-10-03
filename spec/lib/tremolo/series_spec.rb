@@ -14,37 +14,37 @@ describe Tremolo::Series do
   it 'sends point data formatted for InfluxDB', :celluloid => true do
     series.write_point({value: 111, associated_id: 81102})
 
-    json = '[{"name":"accounts.created","columns":["associated_id","value"],"points":[[81102,111]]}]'
+    line = 'accounts.created value=111,associated_id=81102'
 
     sleep 0.1
-    expect(socket).to have_received(:send).with(json, 0)
+    expect(socket).to have_received(:send).with(line, 0)
   end
 
   it 'sends single point with value 1', :celluloid => true do
     series.increment
 
-    json = '[{"name":"accounts.created","columns":["value"],"points":[[1]]}]'
+    line = 'accounts.created value=1'
 
     sleep 0.1
-    expect(socket).to have_received(:send).with(json, 0)
+    expect(socket).to have_received(:send).with(line, 0)
   end
 
   it 'sends single point with value -1', :celluloid => true do
     series.decrement
 
-    json = '[{"name":"accounts.created","columns":["value"],"points":[[-1]]}]'
+    line = 'accounts.created value=-1'
 
     sleep 0.1
-    expect(socket).to have_received(:send).with(json, 0)
+    expect(socket).to have_received(:send).with(line, 0)
   end
 
   it 'tracks timing value for ms', :celluloid => true do
     series.timing(89)
 
-    json = '[{"name":"accounts.created","columns":["value"],"points":[[89]]}]'
+    line = 'accounts.created value=89'
 
     sleep 0.1
-    expect(socket).to have_received(:send).with(json, 0)
+    expect(socket).to have_received(:send).with(line, 0)
   end
 
   it 'tracks block timing value for ms', :celluloid => true do
@@ -60,10 +60,10 @@ describe Tremolo::Series do
       'returning another thing'
     end
 
-    json = '[{"name":"accounts.created","columns":["value"],"points":[[1050]]}]'
+    line = 'accounts.created value=1050'
 
     sleep 0.1
     expect(returned).to eq('returning another thing')
-    expect(socket).to have_received(:send).with(json, 0)
+    expect(socket).to have_received(:send).with(line, 0)
   end
 end
