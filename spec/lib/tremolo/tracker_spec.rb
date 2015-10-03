@@ -13,38 +13,37 @@ describe Tremolo::Tracker do
   it 'sends point data formatted for InfluxDB', :celluloid => true do
     tracker.write_point('accounts.created', {value: 111, associated_id: 81102})
 
-    json = '[{"name":"accounts.created","columns":["associated_id","value"],"points":[[81102,111]]}]'
-
+    line = 'accounts.created value=111,associated_id=81102'
 
     sleep 0.1
-    expect(socket).to have_received(:send).with(json, 0)
+    expect(socket).to have_received(:send).with(line, 0)
   end
 
   it 'sends single point with value 1', :celluloid => true do
     tracker.increment('accounts.created')
 
-    json = '[{"name":"accounts.created","columns":["value"],"points":[[1]]}]'
+    line = 'accounts.created value=1'
 
     sleep 0.1
-    expect(socket).to have_received(:send).with(json, 0)
+    expect(socket).to have_received(:send).with(line, 0)
   end
 
   it 'sends single point with value -1', :celluloid => true do
     tracker.decrement('accounts.created')
 
-    json = '[{"name":"accounts.created","columns":["value"],"points":[[-1]]}]'
+    line = 'accounts.created value=-1'
 
     sleep 0.1
-    expect(socket).to have_received(:send).with(json, 0)
+    expect(socket).to have_received(:send).with(line, 0)
   end
 
   it 'tracks timing value for ms', :celluloid => true do
     tracker.timing('timing.accounts.created', 89)
 
-    json = '[{"name":"timing.accounts.created","columns":["value"],"points":[[89]]}]'
+    line = 'timing.accounts.created value=89'
 
     sleep 0.1
-    expect(socket).to have_received(:send).with(json, 0)
+    expect(socket).to have_received(:send).with(line, 0)
   end
 
   it 'tracks block timing value for ms', :celluloid => true do
@@ -60,11 +59,11 @@ describe Tremolo::Tracker do
       'returning a thing'
     end
 
-    json = '[{"name":"timing.accounts.created","columns":["value"],"points":[[1014]]}]'
+    line = 'timing.accounts.created value=1014'
 
     sleep 0.1
     expect(returned).to eq('returning a thing')
-    expect(socket).to have_received(:send).with(json, 0)
+    expect(socket).to have_received(:send).with(line, 0)
   end
 
   context "with a namespace" do
@@ -73,10 +72,10 @@ describe Tremolo::Tracker do
     it 'tracks timing value for ms', :celluloid => true do
       tracker.timing('timing.accounts.created', 14)
 
-      json = '[{"name":"alf.timing.accounts.created","columns":["value"],"points":[[14]]}]'
+      line = 'alf.timing.accounts.created value=14'
 
       sleep 0.1
-      expect(socket).to have_received(:send).with(json, 0)
+      expect(socket).to have_received(:send).with(line, 0)
     end
   end
 end

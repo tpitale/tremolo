@@ -17,7 +17,7 @@ module Tremolo
 
     private
     def prepare(series_name, data)
-      JSON.generate(DataPoint.from_hash(series_name, data).as_json)
+      DataPoint.new(series_name, data).lines
     end
   end
 end
