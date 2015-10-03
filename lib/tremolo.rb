@@ -1,6 +1,9 @@
 require "tremolo/version"
 
 require "json"
+require "celluloid"
+Celluloid.boot
+
 require "celluloid/io"
 
 module Tremolo
@@ -16,7 +19,7 @@ module Tremolo
     if host.nil? || port.nil?
       NoopTracker.new(host, port, options)
     else
-      Tracker.supervise_as as.to_sym, host, port, options
+      Celluloid.supervise type: Tracker, as: as.to_sym, args: [host, port, options]
       Celluloid::Actor[as.to_sym]
     end
   end
