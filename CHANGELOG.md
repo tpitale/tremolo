@@ -1,3 +1,10 @@
+## Tremolo 0.1.0 ##
+
+*   Wireline compatibility with Influxdb 0.9 series
+*   Update celluloid to 0.17.2+
+
+    *Tony Pitale*
+
 ## Tremolo 0.0.4 ##
 
 *   Make Tremolo::Tracker a Celluloid actor so that it can be supervised if desired
