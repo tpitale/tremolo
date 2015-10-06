@@ -70,6 +70,14 @@ series = tracker.series('timing.series-name')
 value = series.time { Net::HTTP.get(URI('http://google.com')) }
 ```
 
+## Tags ##
+
+A Hash of `tags` data can be passed to `increment`, `decrement`, `timing`, and `time`, and `write_point`, as the last argument.
+
+```ruby
+series.write_point({:value => 18}, {:otherdata => 1986})
+```
+
 ## Databases, Namespace and Series names
 
 Since version 0.7.1 of InfluxDB, multiple databases can be configured for different UDP ports. All
