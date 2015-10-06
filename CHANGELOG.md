@@ -1,3 +1,9 @@
+## Tremolo 0.2.0 ##
+
+*   Adds tags to `Tracker` and `Series`
+
+    *Tony Pitale*
+
 ## Tremolo 0.1.0 ##
 
 *   Wireline compatibility with Influxdb 0.9 series
