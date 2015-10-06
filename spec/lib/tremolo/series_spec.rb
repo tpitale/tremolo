@@ -16,7 +16,7 @@ describe Tremolo::Series do
 
     line = 'accounts.created value=111,associated_id=81102'
 
-    sleep 0.1
+    sleep 0.01
     expect(socket).to have_received(:send).with(line, 0)
   end
 
@@ -25,7 +25,7 @@ describe Tremolo::Series do
 
     line = 'accounts.created value=1'
 
-    sleep 0.1
+    sleep 0.01
     expect(socket).to have_received(:send).with(line, 0)
   end
 
@@ -34,7 +34,7 @@ describe Tremolo::Series do
 
     line = 'accounts.created value=-1'
 
-    sleep 0.1
+    sleep 0.01
     expect(socket).to have_received(:send).with(line, 0)
   end
 
@@ -43,7 +43,7 @@ describe Tremolo::Series do
 
     line = 'accounts.created value=89'
 
-    sleep 0.1
+    sleep 0.01
     expect(socket).to have_received(:send).with(line, 0)
   end
 
@@ -62,7 +62,7 @@ describe Tremolo::Series do
 
     line = 'accounts.created value=1050'
 
-    sleep 0.1
+    sleep 0.01
     expect(returned).to eq('returning another thing')
     expect(socket).to have_received(:send).with(line, 0)
   end

@@ -8,28 +8,28 @@ module Tremolo
       @tracker, @series_name = tracker, series_name
     end
 
-    def increment
-      write_point({value: 1})
+    def increment(tags = {})
+      write_point({value: 1}, tags)
     end
 
-    def decrement
-      write_point({value: -1})
+    def decrement(tags = {})
+      write_point({value: -1}, tags)
     end
 
-    def timing(value)
-      write_point({value: value})
+    def timing(value, tags = {})
+      write_point({value: value}, tags)
     end
 
-    def time(&block)
-      tracker.time(series_name, &block)
+    def time(tags = {}, &block)
+      tracker.time(series_name, tags, &block)
     end
 
-    def write_point(data)
-      write_points([data])
+    def write_point(data, tags = {})
+      write_points([data], tags)
     end
 
-    def write_points(data)
-      tracker.write_points(series_name, data)
+    def write_points(data, tags = {})
+      tracker.write_points(series_name, data, tags)
     end
   end
 end

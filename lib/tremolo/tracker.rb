@@ -16,32 +16,32 @@ module Tremolo
       Series.new(self, series_name)
     end
 
-    def increment(series_name)
-      write_point(series_name, {value: 1})
+    def increment(series_name, tags = {})
+      write_point(series_name, {value: 1}, tags)
     end
 
-    def decrement(series_name)
-      write_point(series_name, {value: -1})
+    def decrement(series_name, tags = {})
+      write_point(series_name, {value: -1}, tags)
     end
 
-    def timing(series_name, value)
-      write_point(series_name, {value: value})
+    def timing(series_name, value, tags = {})
+      write_point(series_name, {value: value}, tags)
     end
 
-    def time(series_name, &block)
+    def time(series_name, tags = {}, &block)
       start = Time.now
       block.call.tap do |_|
         value = ((Time.now-start)*1000).round
-        timing(series_name, value)
+        timing(series_name, value, tags)
       end
     end
 
-    def write_point(series_name, data)
-      write_points(series_name, [data])
+    def write_point(series_name, data, tags = {})
+      write_points(series_name, [data], tags)
     end
 
-    def write_points(series_name, data)
-      sender.async.write_points([namespace, series_name].compact.join('.'), data)
+    def write_points(series_name, data, tags = {})
+      sender.async.write_points([namespace, series_name].compact.join('.'), data, tags)
     end
 
     private
