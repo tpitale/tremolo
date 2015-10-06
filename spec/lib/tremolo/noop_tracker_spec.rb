@@ -20,6 +20,12 @@ describe Tremolo::NoopTracker do
     expect(socket).to have_received(:send).never
   end
 
+  it 'does not send single point with value 1 and tags' do
+    tracker.increment('accounts.created', {associated_id: 81102})
+
+    expect(socket).to have_received(:send).never
+  end
+
   it 'does not send single point with value -1' do
     tracker.decrement('accounts.created')
 

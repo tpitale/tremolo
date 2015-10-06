@@ -15,7 +15,16 @@ describe Tremolo::Tracker do
 
     line = 'accounts.created value=111,associated_id=81102'
 
-    sleep 0.1
+    sleep 0.01
+    expect(socket).to have_received(:send).with(line, 0)
+  end
+
+  it 'sends tags formatted for InfluxDB', :celluloid => true do
+    tracker.write_point('accounts.created', {value: 111}, {associated_id: 81102})
+
+    line = 'accounts.created,associated_id=81102 value=111'
+
+    sleep 0.01
     expect(socket).to have_received(:send).with(line, 0)
   end
 
@@ -24,7 +33,7 @@ describe Tremolo::Tracker do
 
     line = 'accounts.created value=1'
 
-    sleep 0.1
+    sleep 0.01
     expect(socket).to have_received(:send).with(line, 0)
   end
 
@@ -33,7 +42,7 @@ describe Tremolo::Tracker do
 
     line = 'accounts.created value=-1'
 
-    sleep 0.1
+    sleep 0.01
     expect(socket).to have_received(:send).with(line, 0)
   end
 
@@ -42,7 +51,7 @@ describe Tremolo::Tracker do
 
     line = 'timing.accounts.created value=89'
 
-    sleep 0.1
+    sleep 0.01
     expect(socket).to have_received(:send).with(line, 0)
   end
 
@@ -61,7 +70,7 @@ describe Tremolo::Tracker do
 
     line = 'timing.accounts.created value=1014'
 
-    sleep 0.1
+    sleep 0.01
     expect(returned).to eq('returning a thing')
     expect(socket).to have_received(:send).with(line, 0)
   end
@@ -74,7 +83,7 @@ describe Tremolo::Tracker do
 
       line = 'alf.timing.accounts.created value=14'
 
-      sleep 0.1
+      sleep 0.01
       expect(socket).to have_received(:send).with(line, 0)
     end
   end
