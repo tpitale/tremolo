@@ -1,3 +1,9 @@
+## Tremolo 0.2.2 ##
+
+*   Fix tremolo on ruby 2.1 series
+
+    *Tony Pitale*
+
 ## Tremolo 0.2.1 ##
 
 *   Add `Tremolo.fetch` in place of using Celluloid
