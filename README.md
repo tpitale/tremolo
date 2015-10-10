@@ -2,6 +2,9 @@
 
 InfluxDB UDP Tracker built on Celluloid::IO
 
+[![Build Status](https://travis-ci.org/tpitale/tremolo.svg?branch=master)](https://travis-ci.org/tpitale/tremolo)
+[![Code Climate](https://codeclimate.com/github/tpitale/tremolo.png)](https://codeclimate.com/github/tpitale/tremolo)
+
 ## Installation
 
 Add this line to your application's Gemfile:
