@@ -16,28 +16,32 @@ Or install it yourself as:
 
     $ gem install tremolo
 
-## Is it any good?
+## Is it any good? ##
 
 It's getting there, but some of the nuance of the method API and Celluloid's behavior are still being worked out. I'll let you know when it's settled down a bit more.
 
-## Usage
+## Usage ##
 
 ```ruby
-# Get an unsupervised tracker
-tracker = Tremolo.tracker('0.0.0.0', 4444)
+# Start by creating a supervised tracker
+#   and point it at our InfluxDB server's UDP port
+Tremolo.supervised_tracker(:tracker, '0.0.0.0', 4444)
 
 # options that can be set on the tracker:
 # namespace, a string prefix for all series names on this tracker, joined with '.' (default="")
-tracker = Tremolo.tracker('0.0.0.0', 4444, namespace: 'appname')
+tracker = Tremolo.supervised_tracker(:tracker, '0.0.0.0', 4444, namespace: 'appname')
 
-# tracker is a Celluloid Actor, it will not be GC'd like you would expect so I'd advise against doing it this way.
+# whenever you want to use this tracker, you can fetch it
+tracker = Tremolo.fetch(:tracker)
 
-# Because we're using celluloid, we probably want to create a supervised tracker
-Tremolo.supervised_tracker(:tracker, '0.0.0.0', 4444, namespace: 'appname')
+# if there is no tracker by this name, it will return a NoopTracker
+#   useful when in testing or development
+tracker = Tremolo.fetch(:notreallythere)
+```
 
-# whenever you want to use this supervised tracker, you can always ask Celluloid
-tracker = Celluloid::Actor[:tracker]
+Now that we have our tracker, let's send some data to InfluxDB:
 
+```ruby
 # Write a point to 'series-name' series
 tracker.write_point('series-name', {:value => 121, :otherdata => 998142})
 
@@ -72,7 +76,7 @@ value = series.time { Net::HTTP.get(URI('http://google.com')) }
 
 ## Tags ##
 
-A Hash of `tags` data can be passed to `increment`, `decrement`, `timing`, and `time`, and `write_point`, as the last argument.
+A Hash of `tags` data can be passed to `increment`, `decrement`, `timing`, `time`, and `write_point`, as the last argument. Very useful for segmenting data by some "metadata".
 
 ```ruby
 series.write_point({:value => 18}, {:otherdata => 1986})
@@ -83,7 +87,7 @@ series.write_point({:value => 18}, {:otherdata => 1986})
 Since version 0.7.1 of InfluxDB, multiple databases can be configured for different UDP ports. All
 tracking in Tremolo is done by way of UDP.
 
-So, port 4444 from the above goes to one database as configured, and port 8191 could go to a second DB.
+So, port 4444 from the examples above goes to one database as configured, and port 8191 could go to a second DB.
 
 This somewhat negates the need for the `namespace` option to be set for a `tracker` since each application
 could be configured to go to its own InfluxDB database.

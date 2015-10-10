@@ -16,14 +16,18 @@ module Tremolo
   end
 
   def supervised_tracker(as, host, port, options={})
-    if host.nil? || port.nil?
-      NoopTracker.new(host, port, options)
-    else
+    unless host.nil? || port.nil?
       Celluloid.supervise type: Tracker, as: as.to_sym, args: [host, port, options]
-      Celluloid::Actor[as.to_sym]
     end
+
+    fetch(as, NoopTracker.new(host, port, options))
   end
 
+  def fetch(as, default = NoopTracker.new(nil, nil))
+    Celluloid::Actor[as.to_sym] || default
+  end
+
+  module_function :fetch
   module_function :tracker
   module_function :supervised_tracker
 end
