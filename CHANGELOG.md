@@ -1,3 +1,9 @@
+## Tremolo 0.2.1 ##
+
+*   Add `Tremolo.fetch` in place of using Celluloid
+
+    *Tony Pitale*
+
 ## Tremolo 0.2.0 ##
 
 *   Adds tags to `Tracker` and `Series`
