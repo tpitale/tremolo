@@ -45,7 +45,7 @@ module Tremolo
     end
 
     def value_mapper
-      lambda { |k,v| "#{k}=#{cast(v)}" }
+      lambda { |(k,v)| "#{k}=#{cast(v)}" }
     end
   end
 end
