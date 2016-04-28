@@ -1,3 +1,9 @@
+## Tremolo 0.3.0 ##
+
+*   Switch to require celluloid/current to not trigger deprecation warning
+
+    *Tony Pitale*
+
 ## Tremolo 0.2.2 ##
 
 *   Fix tremolo on ruby 2.1 series
