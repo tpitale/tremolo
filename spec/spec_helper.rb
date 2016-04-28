@@ -6,6 +6,7 @@ require 'bundler/setup'
 require 'rspec'
 require 'mocha/api'
 require 'bourne'
+require 'celluloid/current'
 require 'celluloid/test'
 
 $CELLULOID_DEBUG = false

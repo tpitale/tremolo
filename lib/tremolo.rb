@@ -1,7 +1,7 @@
 require "tremolo/version"
 
 require "json"
-require "celluloid"
+require "celluloid/current"
 Celluloid.boot
 
 require "celluloid/io"
